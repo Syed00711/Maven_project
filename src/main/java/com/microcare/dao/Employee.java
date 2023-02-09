@@ -1,5 +1,6 @@
 package com.microcare.dao;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 public class Employee {
@@ -9,15 +10,22 @@ public class Employee {
 	private String last_name;
 	private String email;
 	private String phone;
-	private Date hire_date;
+	private LocalDate hire_date;
 	private int manager_id;
 	private String job_title;
+	private long salary;
 	
+	public long getSalary() {
+		return salary;
+	}
+	public void setSalary(long salary) {
+		this.salary = salary;
+	}
 	@Override
 	public String toString() {
 		return "Employee [employee_id=" + employee_id + ", first_name=" + first_name + ", last_name=" + last_name
 				+ ", email=" + email + ", phone=" + phone + ", hire_date=" + hire_date + ", manager_id=" + manager_id
-				+ ", job_title=" + job_title + "]";
+				+ ", job_title=" + job_title + ", salary=" + salary + "]";
 	}
 	public int getEmployee_id() {
 		return employee_id;
@@ -49,10 +57,10 @@ public class Employee {
 	public void setPhone(String phone) {
 		this.phone = phone;
 	}
-	public Date getHire_date() {
+	public LocalDate getHire_date() {
 		return hire_date;
 	}
-	public void setHire_date(Date hire_date) {
+	public void setHire_date(LocalDate hire_date) {
 		this.hire_date = hire_date;
 	}
 	public int getManager_id() {
