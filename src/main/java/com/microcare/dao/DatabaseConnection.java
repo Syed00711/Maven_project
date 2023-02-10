@@ -2,6 +2,7 @@ package com.microcare.dao;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -18,7 +19,8 @@ public class DatabaseConnection {
     private static String instemp="insert into employees values((select max(employee_id)+1 from employees),"
     		+ "FIRST_NAME,LAST_NAME,EMAIL,PHONE,HIRE_DATE,10,JOB_TITLE,SALARY)";
     
-   // private static String udpemployee ="update employees set FIRST_NAME=?,LAST_NAME=LT where employee_id=?"
+    private static final String udpemployee ="update employees set FIRST_NAME=? where employee_id=?";
+    private static final String deleteEmployee ="delete from employees where email=?";
     
     private  Connection conn;
     
@@ -57,6 +59,49 @@ try {
 	closeConnection();
 }	
 		return result;
+    	
+    }
+    
+    public int updateEmployee(Employee emp) {
+    	int result=0;
+try {
+            //update employees set first_name=? where empl_id=?
+			PreparedStatement preparestmt = getConnection().prepareStatement(udpemployee);
+			//
+			preparestmt.setString(1, emp.getFirst_name());
+			//	update employees set first_name='microcare' where empl_id=?
+			preparestmt.setInt(2, emp.getEmployee_id());
+//				update employees set first_name='microcare' where empl_id=353523
+				 result =preparestmt.executeUpdate();
+			
+			
+		
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			closeConnection();
+		}
+return result;
+    	
+    	
+    	
+    }
+    
+    
+    public int deleteEmployee(String email) {
+    	int result=0;
+    	try {
+    				PreparedStatement preparestmt = getConnection().prepareStatement(deleteEmployee);
+    				preparestmt.setString(1, email);
+    			    result =preparestmt.executeUpdate();
+    			} catch (SQLException e) {
+    				e.printStackTrace();
+    			}finally {
+    				closeConnection();
+    			}
+    	return result;
+    	    	
+    	
     	
     }
     
